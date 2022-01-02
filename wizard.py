@@ -3,6 +3,8 @@ from animated_sprite import AnimatedSprite
 from constants import *
 from groups import forest_group, player_group
 from load_image import load_image
+from groups import all_sprites, bullets
+from ammo import *
 
 
 class Wizard(AnimatedSprite):
@@ -22,6 +24,8 @@ class Wizard(AnimatedSprite):
         self.look_direction_left = False
 
         self.blocked_to_up = self.blocked_to_right = self.blocked_to_left = self.blocked_to_down = False
+
+        self.last_pos = ()
 
         self.touched = False
 
@@ -89,6 +93,20 @@ class Wizard(AnimatedSprite):
 
     def draw_healbar(self):
         pygame.draw.rect(SCREEN, color="red", rect=(self.rect.x + 10, self.rect.y, 64, 10))
+
+    def shoot(self, mousepos):
+        if mousepos is None:
+            mousepos = self.last_pos
+        else:
+            self.last_pos = mousepos
+        x = self.rect.centerx
+        y = self.rect.centery
+        dx = mousepos[0] - self.rect.centerx
+        dy = mousepos[1] - self.rect.centery
+        if abs(dx) > 0 or abs(dy) > 0:
+            bullet = Fireball(x, y, dx, dy)
+            all_sprites.add(bullet)
+            bullets.add(bullet)
 
 
 wizard = Wizard(load_image("DinoSprites - doux.png"), 24, 1, 640, 640)
