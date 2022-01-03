@@ -24,5 +24,6 @@ class Rubin(pygame.sprite.Sprite):
             SCREEN.blit(text, (self.rect.centerx, self.rect.y - 20))
             if args and args[0].key == pygame.K_e:
                 wizard.new_spell('fireball')
+                self.kill()
 
 
