@@ -6,7 +6,7 @@ from constants import *
 class Fireball(pygame.sprite.Sprite):
     def __init__(self, x, y, dx, dy):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.smoothscale(load_image('270-2701567_fireball-clipart-8-bit-png-download.png').convert_alpha(), (20, 20))
+        self.image = pygame.transform.smoothscale(load_image('fireball.png').convert_alpha(), (20, 20))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.speed = 400 / FPS

@@ -1,8 +1,12 @@
 from constants import *
 from camera import camera
 from wizard import wizard
-from groups import all_sprites, player_group, map_sprites, forest_group, bullets
-from map_generation import load_level, gen_map, add_forest
+from enemy import enemy_bots
+from groups import *
+from map_generation import *
+import pygame
+from load_image import load_image
+from draw_UI import *
 
 
 def game():
@@ -12,70 +16,79 @@ def game():
     to_left = False
     to_right = False
     to_down = False
-
+    xp = 100
     load_level("data/level.txt")
-    add_forest()
+    # add_forest()
     gen_map()
-    shooting = False
-
-    pos = [0, 0]
-    reprieve = 0
+    gen_mana()
+    gen_rubins()
+    # print(len(level))
+    # for i in level:
+    #     print(i)
+    pos = (0, 0)
+    attacking = False
     while running:
         SCREEN.fill("black")
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_a:
                     to_left = True
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_d:
                     to_right = True
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_s:
                     to_down = True
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_w:
                     to_up = True
                 if event.key == pygame.K_h:
                     shaking = True
+                if event.key == pygame.K_e:
+                    rubins_group.update(event)
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_a:
                     to_left = False
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_d:
                     to_right = False
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_s:
                     to_down = False
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_w:
                     to_up = False
             if event.type == pygame.MOUSEMOTION:
-                if event.pos is not None:
-                    pos = event.pos
+                pos = event.pos
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    shooting = True
-                    if event.pos is not None:
-                        pos = event.pos
-            if event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    shooting = False
+                    attacking = True
+                if event.button == 4 or event.button == 5:
+                    wizard.change_spell()
 
         camera.update(wizard)
         for i in all_sprites:
             camera.apply(i)
-        if shooting and not reprieve:
-            wizard.shoot(wizard.shoot(pos))
-            reprieve = 20
-        elif reprieve > 0:
-            reprieve -= 1
-        wizard.update(to_right, to_left, to_up, to_down, pos)
-        map_sprites.draw(SCREEN)
-        bullets.update()
-        bullets.draw(SCREEN)
+
+        wizard.update(to_right, to_left, to_up, to_down, pos, attacking)
+        attacking = False
+        for enemy in enemy_bots:
+            enemy.update()
         #
         # for i in forest_group:
-        #     i.draw_rect()
-        forest_group.draw(SCREEN)
+        #     i.draw_rect()ф
         # print(len(forest_group))
+        map_sprites.draw(SCREEN)
+        decor_group.draw(SCREEN)
+        mana_group.draw(SCREEN)
+        rubins_group.draw(SCREEN)
         player_group.draw(SCREEN)
+        enemy_group.draw(SCREEN)
+        bullets_group.draw(SCREEN)
+        bullets.draw(SCREEN)
+        bullets.update()
         # all_sprites.draw(screen)
         # wizard.draw_healbar()
+        forest_group.draw(SCREEN)
+        rubins_group.update()
+        draw_lives(xp)
+        draw_mana(wizard.get_mana())
         pygame.display.flip()
         clock.tick(FPS)
+
