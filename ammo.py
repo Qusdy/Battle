@@ -20,7 +20,6 @@ class Fireball(pygame.sprite.Sprite):
         bullets.add(self)
 
     def update(self, camera=(0, 0)):
-        print(camera)
         self.pos.x += (self.dir.x * self.speed) + camera[0]
         self.pos.y += (self.dir.y * self.speed) + camera[1]
         self.rect.center = (self.pos.x, self.pos.y)

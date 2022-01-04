@@ -78,9 +78,11 @@ class Wizard(AnimatedSprite):
             if mouse_position[0] > WINDOW_WIGHT // 2:
                 self.look_direction_left = False
             self.attack_animation(self.look_direction_left)
-        elif self.is_attacking and self.spell_now == 'fireball' and self.mana >= 10:
-            self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
-            self.mana -= 10
+        elif self.is_attacking and self.spell_now == 'fireball':
+            if self.mana >= 10:
+                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
+                self.mana -= 10
+            self.is_attacking = False
         elif not any([to_r, to_l, to_u, to_d]):
             self.standing_animation(mouse_position)
         elif any([to_r, to_l, to_u, to_d]):
@@ -150,7 +152,6 @@ class Wizard(AnimatedSprite):
         dy = mousepos[1] - perspos[1]
         if abs(dx) > 0 or abs(dy) > 0:
             bullet = Fireball(x, y, dx, dy)
-        self.is_attacking = False
 
     def change_spell(self):
         self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]
