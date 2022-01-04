@@ -6,8 +6,9 @@ FPS = 60
 SPEED = 600 / FPS
 ENEMY_SPEED = 580 / FPS
 BULLET_SPEED = 700 / FPS
-BULLET_SIZE = (30, 30)
-ENEMY_SHOOT_DISTANCE = 250
+BULLET_SIZE = (50, 50)
+BULLET_DAMAGE = 5
+ENEMY_SHOOT_DISTANCE = 400
 LEVEL_HEIGHT = LEVEL_WIGHT = 32 * 100
 SIZE = WINDOW_HEIGHT, WINDOW_WIGHT = 800, 800
 clock = pygame.time.Clock()
@@ -29,3 +30,11 @@ FONT_SIZE_PARAM = 30
 
 BTN_SIZE = (200, 100)
 SIGHT = '*'
+
+
+FIREBALL = {
+    "class": None,
+    "name": "Огненный шар ",
+    "damage": 20,
+    "speed": 1200 / FPS
+}

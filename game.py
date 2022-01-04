@@ -10,7 +10,9 @@ from draw_UI import *
 
 
 def game():
+    camera_to_right = 1
     running = True
+    shaking = False
 
     to_up = False
     to_left = False
@@ -61,19 +63,21 @@ def game():
                     attacking = True
                 if event.button == 4 or event.button == 5:
                     wizard.change_spell()
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                attacking = False
 
         camera.update(wizard)
+        if shaking:
+            camera.dx += 10 * camera_to_right
         for i in all_sprites:
             camera.apply(i)
 
         wizard.update(to_right, to_left, to_up, to_down, pos, attacking)
         attacking = False
-        for enemy in enemy_bots:
-            enemy.update()
-        #
-        # for i in forest_group:
-        #     i.draw_rect()ф
-        # print(len(forest_group))
+        enemy_group.update()
+        bullets_group.update()
+        camera_to_right *= -1
+        xp = wizard.health
         map_sprites.draw(SCREEN)
         decor_group.draw(SCREEN)
         mana_group.draw(SCREEN)

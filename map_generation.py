@@ -71,6 +71,8 @@ def gen_rubins():
     for i in range(3):
         coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
         rubin = Rubin((coords[0], coords[1]))
+        rubins_group.add(rubin)
+        all_sprites.add(rubin)
 
 # def add_forest():
 #     for i in range(0, len(level), 2):

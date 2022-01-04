@@ -1,9 +1,9 @@
 from animated_sprite import AnimatedSprite
 from bullet import Bullet
 from constants import *
-from groups import enemy_group
+from groups import enemy_group, bullets_group, all_sprites
 from load_image import load_image
-from random import randrange, uniform, randint
+from random import randrange, uniform
 from wizard import wizard
 import pygame
 
@@ -11,7 +11,7 @@ import pygame
 class Enemy(AnimatedSprite):
     def __init__(self, sheet, colums, rows):
         sheet = pygame.transform.scale(sheet, (sheet.get_width() * 3, sheet.get_height() * 3))
-        self.speed = randint(2, SPEED)
+        self.speed = uniform(10, ENEMY_SPEED)
         x, y = self.get_coord()
         super(Enemy, self).__init__(sheet, colums, rows, x, y)
         self.run = []
@@ -22,44 +22,29 @@ class Enemy(AnimatedSprite):
         for i in self.frames[STAND_IND[0]:STAND_IND[1]]:
             for j in range(5):
                 self.stand.append(i)
+        self.shoot_distance = ENEMY_SHOOT_DISTANCE + randrange(-20, 20)
+        self.bullet = Bullet(self.rect.centerx, self.rect.centery, self.get_vector().rotate(randrange(-10, 10)), True)
         self.running = False
-        self.bullet = False
+        self.clock = pygame.time.Clock()
+        self.time = 0
 
     def update(self):
-        if self.distance_to_wizard():
-            self.move()
+        if self.distance_to_wizard() >= self.shoot_distance:
             self.running = True
         else:
             self.running = False
-        if not self.running:
-            self.stand_animation()
-            if (not self.bullet) or self.bullet.dead:
-                self.shoot()
-        else:
+        if self.running:
+            self.move()
             self.running_animation()
-        if self.bullet:
-            self.shoot_animation()
+        else:
+            self.time += self.clock.tick()
+            if self.bullet.dead and self.time >= 1500:
+                self.time = 0
+                self.shoot()
+            self.stand_animation()
 
     def distance_to_wizard(self):
-        # Проверка расстояния до нашего игрока
-        if self.get_distance() >= ENEMY_SHOOT_DISTANCE:
-            return True
-        return False
-
-    def move(self):
-        dx, dy = self.get_vector()
-        self.rect.x += dx * ENEMY_SPEED
-        self.rect.y += dy * ENEMY_SPEED
-
-    def get_vector(self):
-        dx = wizard.rect.x - self.rect.x
-        dy = wizard.rect.y - self.rect.y
-        dx /= self.get_distance()
-        dy /= self.get_distance()
-        return dx, dy
-
-    def get_distance(self):
-        return ((wizard.rect.x - self.rect.x) ** 2 + (wizard.rect.y - self.rect.y) ** 2) ** 0.5
+        return ((self.rect.centerx - wizard.rect.centerx) ** 2 + (self.rect.centery - wizard.rect.centery) ** 2) ** 0.5
 
     def stand_animation(self):
         self.cur_frame = (self.cur_frame + 1) % len(self.stand)
@@ -76,20 +61,22 @@ class Enemy(AnimatedSprite):
         self.rotate(self.run)
 
     def get_coord(self):
-        x, y = randrange(1000, 1500), randrange(1000, 1500)
+        x, y = randrange(600, 2000), randrange(600, 2000)
         return x, y
 
+    def move(self):
+        vector = self.get_vector()
+        self.rect.x += vector[0] * self.speed
+        self.rect.y += vector[1] * self.speed
+
     def shoot(self):
-        dx, dy = self.get_vector()
-        self.bullet = Bullet(self.rect.x + self.rect.width // 2, self.rect.y + self.rect.height // 2,
-                             (dx + uniform(-0.35, 0.35), dy + uniform(-0.35, 0.35)))
+        self.bullet = Bullet(self.rect.centerx, self.rect.centery, self.get_vector().rotate(randrange(-10, 10)))
 
-    def shoot_animation(self):
-        self.bullet.move()
-        self.bullet.check_distance()
+    def get_vector(self):
+        return pygame.math.Vector2(wizard.rect.centerx - self.rect.centerx, wizard.rect.centery - self.rect.centery).normalize()
 
 
-enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1)]
+enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1)]
 
 for enemy in enemy_bots:
     enemy_group.add(enemy)

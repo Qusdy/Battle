@@ -78,11 +78,12 @@ class Wizard(AnimatedSprite):
             if mouse_position[0] > WINDOW_WIGHT // 2:
                 self.look_direction_left = False
             self.attack_animation(self.look_direction_left)
-        elif self.is_attacking and self.spell_now == 'fireball':
-            self.shoot(mouse_position)
+        elif self.is_attacking and self.spell_now == 'fireball' and self.mana >= 10:
+            self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
+            self.mana -= 10
         elif not any([to_r, to_l, to_u, to_d]):
             self.standing_animation(mouse_position)
-        if any([to_r, to_l, to_u, to_d]):
+        elif any([to_r, to_l, to_u, to_d]):
             if mouse_position[0] < WINDOW_WIGHT // 2:
                 self.look_direction_left = True
             if mouse_position[0] > WINDOW_WIGHT // 2:
@@ -108,17 +109,6 @@ class Wizard(AnimatedSprite):
 
             self.mana += 10
             pygame.sprite.groupcollide(player_group, mana_group, False, True)
-
-    def shoot(self, mousepos):
-        x = self.rect.centerx
-        y = self.rect.centery
-        dx = mousepos[0] - self.rect.centerx
-        dy = mousepos[1] - self.rect.centery
-        if abs(dx) > 0 or abs(dy) > 0:
-            bullet = Fireball(x, y, dx, dy)
-            all_sprites.add(bullet)
-            bullets.add(bullet)
-        self.is_attacking = False
 
     def standing_animation(self, mouse_position):
         if mouse_position[0] < WINDOW_WIGHT // 2:
@@ -152,6 +142,17 @@ class Wizard(AnimatedSprite):
 
     def get_mana(self):
         return self.mana
+
+    def shoot(self, mousepos, perspos):
+        x = 0 + perspos[0]
+        y = 0 + perspos[1]
+        dx = mousepos[0] - perspos[1]
+        dy = mousepos[1] - perspos[1]
+        if abs(dx) > 0 or abs(dy) > 0:
+            bullet = Fireball(x, y, dx, dy)
+            all_sprites.add(bullet)
+            bullets.add(bullet)
+        self.is_attacking = False
 
     def change_spell(self):
         self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]
