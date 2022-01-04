@@ -155,16 +155,11 @@ class Wizard(AnimatedSprite):
 
     def change_spell(self):
         self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]
-        print(self.spell_now)
-        print(self.spells)
 
     def new_spell(self, spell):
-        if spell != 0 and 0 not in self.spells:
-            self.spell_now = spell
-        elif spell != 0 and 0 in self.spells:
-            self.spells[self.spells.index(0)] = spell
-        else:
-            self.spell_now = spell
+        self.spell_now = spell
+        if 0 in self.spells:
+            self.spells[self.spells.index(0)] = self.spell_now
 
 
 wizard = Wizard(load_image("DinoSprites - doux.png"), 24, 1, 640, 640)
