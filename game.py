@@ -71,6 +71,7 @@ def game():
             camera.dx += 10 * camera_to_right
         for i in all_sprites:
             camera.apply(i)
+        bullets.update((camera.dx, camera.dy))
 
         wizard.update(to_right, to_left, to_up, to_down, pos, attacking)
         attacking = False
@@ -86,7 +87,7 @@ def game():
         enemy_group.draw(SCREEN)
         bullets_group.draw(SCREEN)
         bullets.draw(SCREEN)
-        bullets.update()
+        # bullets.update()
         # all_sprites.draw(screen)
         # wizard.draw_healbar()
         forest_group.draw(SCREEN)

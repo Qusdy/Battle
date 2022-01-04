@@ -150,8 +150,6 @@ class Wizard(AnimatedSprite):
         dy = mousepos[1] - perspos[1]
         if abs(dx) > 0 or abs(dy) > 0:
             bullet = Fireball(x, y, dx, dy)
-            all_sprites.add(bullet)
-            bullets.add(bullet)
         self.is_attacking = False
 
     def change_spell(self):
