@@ -80,12 +80,12 @@ class Wizard(AnimatedSprite):
             self.attack_animation(self.look_direction_left)
         elif self.is_attacking and self.spell_now == 'fireball':
             if self.mana >= 10:
-                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
+                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery], self.spell_now)
                 self.mana -= 10
             self.is_attacking = False
         elif self.is_attacking and self.spell_now == 'ice_dart':
             if self.mana >= 5:
-                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
+                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery], self.spell_now)
                 self.mana -= 5
             self.is_attacking = False
         elif not any([to_r, to_l, to_u, to_d]):
@@ -113,7 +113,6 @@ class Wizard(AnimatedSprite):
                 self.rect.y -= rastoyan
 
         if pygame.sprite.spritecollideany(self, mana_group) and self.mana < 100:
-
             self.mana += 10
             pygame.sprite.groupcollide(player_group, mana_group, False, True)
 
@@ -121,7 +120,6 @@ class Wizard(AnimatedSprite):
             gr = pygame.sprite.groupcollide(enemy_group, player_group, False, False)
             for i in gr:
                 i.have_damage(5)
-
 
     def standing_animation(self, mouse_position):
         if mouse_position[0] < WINDOW_WIGHT // 2:
@@ -146,11 +144,8 @@ class Wizard(AnimatedSprite):
         if self.cur_frame == len(self.attack) - 1:
             self.is_attacking = False
 
-
-
     def draw_healbar(self):
         pygame.draw.rect(SCREEN, color="red", rect=(self.rect.x + 10, self.rect.y, 64, 10))
-
 
     def attacking(self, pos):
         pass
@@ -159,14 +154,16 @@ class Wizard(AnimatedSprite):
         return self.mana
 
     # Код Димы
-
-    def shoot(self, mousepos, perspos):
+    def shoot(self, mousepos, perspos, spell):
         x = 0 + perspos[0]
         y = 0 + perspos[1]
         dx = mousepos[0] - perspos[1]
         dy = mousepos[1] - perspos[1]
         if abs(dx) > 0 or abs(dy) > 0:
-            bullet = Fireball(x, y, dx, dy)
+            if spell == 'fireball':
+                bullet = Fireball(x, y, dx, dy)
+            if spell == 'ice_dart':
+                bullet = Ice_dart(x, y, dx, dy)
 
     def change_spell(self):
         self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]

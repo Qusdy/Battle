@@ -40,6 +40,13 @@ FIREBALL = {
     "speed": 1200 / FPS
 }
 
+ICE = {
+    "class": None,
+    "name": "Ледяной шип ",
+    "damage": 5,
+    "speed": 1200 / FPS
+}
+
 img_fireball = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 0, 2)
 img_ice_dart = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 2, 2)
 CRYSTALS = {

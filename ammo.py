@@ -14,7 +14,7 @@ def rotate(self):
     mouse_x, mouse_y = pygame.mouse.get_pos()
     rel_x, rel_y = mouse_x - self.x, mouse_y - self.y
     angle = (180 / math.pi) * -math.atan2(rel_y, rel_x)
-    self.image = pygame.transform.rotate(self.original_image, int(angle))
+    self.image = pygame.transform.rotate(self.image, int(angle))
     self.rect = self.image.get_rect(center=self.position)
 
 
@@ -60,29 +60,33 @@ class Ice_dart(pygame.sprite.Sprite):
         self.y = y
         self.dx = dx
         self.dy = dy
-        self.image = pygame.transform.smoothscale(load_image('fireball.png').convert_alpha(), (20, 20))
+        self.original_image = load_image('hadouken-all-you-can.png')
+        self.position = (x, y)
+        self.image = pygame.transform.smoothscale(self.original_image.convert_alpha(), (20, 20))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.speed = FIREBALL['speed']
+        self.speed = ICE['speed']
         self.pos = pygame.math.Vector2(self.x, self.y)
         self.dir = pygame.math.Vector2(self.dx, self.dy).normalize()
         bullets.add(self)
+        rotate(self)
 
     def update(self, camera=(0, 0)):
+        particle = Particles_of_magic(load_image('kisspng-rpg-maker-vx-rpg-maker-mv-animated-film-role-playi'
+                                                 '-5b329b11993981.2440375915300431536276.png'), 5, 2,
+                                      self.rect.x, self.rect.y, 1,
+                                      (30, 30))
+        articles_of_magic.add(particle)
+        all_sprites.add(particle)
         self.pos.x += (self.dir.x * self.speed) + camera[0]
         self.pos.y += (self.dir.y * self.speed) + camera[1]
         self.rect.center = (self.pos.x, self.pos.y)
-        particle = Particles_of_magic(load_image('Smoke & Fire_0.png'), 4, 2, self.rect.centerx, self.rect.y, 1, (20, 20))
-        articles_of_magic.add(particle)
-        all_sprites.add(particle)
         if not self.rect.colliderect(0, 0, WINDOW_HEIGHT, WINDOW_WIGHT):
             self.kill()
         if pygame.sprite.spritecollideany(self, enemy_group):
             for enemy in enemy_group:
                 if pygame.sprite.spritecollideany(enemy, bullets):
-                    enemy.have_damage(10)
-                    Boom(self)
+                    enemy.have_damage(5)
                     self.kill()
         if pygame.sprite.spritecollideany(self, forest_group):
-            Boom(self)
             self.kill()
