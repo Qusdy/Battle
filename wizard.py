@@ -22,6 +22,8 @@ class Wizard(AnimatedSprite):
         self.attack = []
         self.run = []
         self.stand = []
+        self.spells = [0, 0]
+        self.spell_now = self.spells[0]
 
         for i in self.frames[WALK_FRAMES_IND[0]:WALK_FRAMES_IND[1]]:
             for j in range(5):
@@ -70,23 +72,24 @@ class Wizard(AnimatedSprite):
             self.rect.x += SPEED_goriz
             self.blocked_to_left = False
         # Код Алана
-        if self.is_attacking:
+        if self.is_attacking and self.spell_now == 0:
             if mouse_position[0] < WINDOW_WIGHT // 2:
                 self.look_direction_left = True
             if mouse_position[0] > WINDOW_WIGHT // 2:
                 self.look_direction_left = False
-
             self.attack_animation(self.look_direction_left)
-
+        elif self.is_attacking and self.spell_now == 'fireball':
+            if self.mana >= 10:
+                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
+                self.mana -= 10
+            self.is_attacking = False
         elif not any([to_r, to_l, to_u, to_d]):
             self.standing_animation(mouse_position)
-
-        else:
+        elif any([to_r, to_l, to_u, to_d]):
             if mouse_position[0] < WINDOW_WIGHT // 2:
                 self.look_direction_left = True
             if mouse_position[0] > WINDOW_WIGHT // 2:
                 self.look_direction_left = False
-
             self.running_animation(self.look_direction_left)
 
         if pygame.sprite.spritecollideany(self, forest_group):
@@ -142,6 +145,32 @@ class Wizard(AnimatedSprite):
     def get_mana(self):
         return self.mana
 
+    def shoot(self, mousepos, perspos):
+        x = 0 + perspos[0]
+        y = 0 + perspos[1]
+        dx = mousepos[0] - perspos[1]
+        dy = mousepos[1] - perspos[1]
+        if abs(dx) > 0 or abs(dy) > 0:
+            bullet = Fireball(x, y, dx, dy)
+
+    def change_spell(self):
+        self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]
+
+    def new_spell(self, spell):
+        self.spell_now = spell
+        if 0 in self.spells:
+            self.spells[self.spells.index(0)] = self.spell_now
+
 
 wizard = Wizard(load_image("DinoSprites - doux.png"), 24, 1, 640, 640)
 player_group.add(wizard)
+
+
+def get_wizard():
+    global wizard
+    if wizard.health == 0:
+        player_group.remove(wizard)
+        wizard.kill()
+        wizard = Wizard(load_image("DinoSprites - doux.png"), 24, 1, 640, 640)
+        player_group.add(wizard)
+    return wizard

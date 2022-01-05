@@ -32,5 +32,4 @@ class Bullet(pygame.sprite.Sprite):
                 wizard.health -= BULLET_DAMAGE
                 if wizard.health <= 0:
                     wizard.health = 0
-            bullets_group.remove(self)
-            all_sprites.remove(self)
+            self.kill()

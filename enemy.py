@@ -1,7 +1,7 @@
 from animated_sprite import AnimatedSprite
 from bullet import Bullet
 from constants import *
-from groups import enemy_group, bullets_group, all_sprites
+from groups import enemy_group, bullets, all_sprites
 from load_image import load_image
 from random import randrange, uniform
 from wizard import wizard
@@ -27,6 +27,7 @@ class Enemy(AnimatedSprite):
         self.running = False
         self.clock = pygame.time.Clock()
         self.time = 0
+        self.health = 50
 
     def update(self):
         if self.distance_to_wizard() >= self.shoot_distance:
@@ -42,6 +43,12 @@ class Enemy(AnimatedSprite):
                 self.time = 0
                 self.shoot()
             self.stand_animation()
+        if self.health <= 0:
+            self.dead_animation()
+
+    def dead_animation(self):
+        self.speed = 0
+        self.kill()
 
     def distance_to_wizard(self):
         return ((self.rect.centerx - wizard.rect.centerx) ** 2 + (self.rect.centery - wizard.rect.centery) ** 2) ** 0.5
@@ -75,8 +82,30 @@ class Enemy(AnimatedSprite):
     def get_vector(self):
         return pygame.math.Vector2(wizard.rect.centerx - self.rect.centerx, wizard.rect.centery - self.rect.centery).normalize()
 
+    def have_damage(self):
+        if pygame.sprite.spritecollideany(self, bullets):
+            self.health -= 10
 
-enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1)]
+
+enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+              Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+              Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1)]
 
 for enemy in enemy_bots:
     enemy_group.add(enemy)
+
+
+def get_enemies():
+    global enemy_bots
+    if len(enemy_group) < 6:
+        for enemy in enemy_bots:
+            enemy.kill()
+        enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+                      Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+                      Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+                      Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+                      Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+                      Enemy(load_image("DinoSprites-enemy.png"), 24, 1)]
+        for enemy in enemy_bots:
+            enemy_group.add(enemy)
+    return enemy_bots

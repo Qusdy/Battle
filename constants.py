@@ -28,7 +28,7 @@ TITLE_SHEET = load_image("title_sheet.png")
 
 FONT_SIZE_PARAM = 30
 
-BTN_SIZE = (200, 100)
+BTN_SIZE = (350, 100)
 SIGHT = '*'
 
 
