@@ -8,7 +8,7 @@ class Button:
         self.x, self.y = pos[0], pos[1]
         self.index = index
         self.text = text
-        self.font = pygame.font.SysFont('Arial Black', 50)
+        self.font = pygame.font.Font('data/Font.ttf', 50)
         self.active = False
 
     def draw(self):

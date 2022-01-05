@@ -7,3 +7,13 @@ player_group = pygame.sprite.Group()
 forest_group = pygame.sprite.Group()
 decor_group = pygame.sprite.Group()
 mana_group = pygame.sprite.Group()
+enemy_group = pygame.sprite.Group()
+
+rubins_group = pygame.sprite.Group()
+diamond_group = pygame.sprite.Group()
+emeralds_group = pygame.sprite.Group()
+
+crystal_group = pygame.sprite.Group()
+
+bullets_group = pygame.sprite.Group()
+bullets = pygame.sprite.Group()
