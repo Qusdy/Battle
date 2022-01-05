@@ -12,8 +12,8 @@ def terminate():
 def start_menu():
     bg = pygame.transform.scale(load_image('bg.png'), (WINDOW_WIGHT, WINDOW_HEIGHT))
     SCREEN.blit(bg, (0, 0))
-    btns = [Button(BTN_SIZE, (400, 100), 'Играть', 0), Button(BTN_SIZE, (400, 220), 'Звук', 1),
-            Button(BTN_SIZE, (400, 340), 'Выход', 2)]
+    btns = [Button(BTN_SIZE, (400, 150), 'Играть', 0), Button(BTN_SIZE, (400, 270), 'Звук', 1),
+            Button(BTN_SIZE, (400, 390), 'Выход', 2)]
     running = True
     while running:
         for event in pygame.event.get():

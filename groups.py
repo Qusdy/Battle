@@ -9,6 +9,7 @@ decor_group = pygame.sprite.Group()
 mana_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
 rubins_group = pygame.sprite.Group()
+articles_of_magic = pygame.sprite.Group()
 
 bullets_group = pygame.sprite.Group()
 bullets = pygame.sprite.Group()

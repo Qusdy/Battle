@@ -87,6 +87,8 @@ def game():
         enemy_group.draw(SCREEN)
         bullets_group.draw(SCREEN)
         bullets.draw(SCREEN)
+        articles_of_magic.draw(SCREEN)
+        articles_of_magic.update()
         # bullets.update()
         # all_sprites.draw(screen)
         # wizard.draw_healbar()
