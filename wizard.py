@@ -83,6 +83,11 @@ class Wizard(AnimatedSprite):
                 self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
                 self.mana -= 10
             self.is_attacking = False
+        elif self.is_attacking and self.spell_now == 'ice_dart':
+            if self.mana >= 5:
+                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
+                self.mana -= 5
+            self.is_attacking = False
         elif not any([to_r, to_l, to_u, to_d]):
             self.standing_animation(mouse_position)
         elif any([to_r, to_l, to_u, to_d]):

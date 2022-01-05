@@ -63,7 +63,7 @@ def game():
                 if event.key == pygame.K_h:
                     shaking = True
                 if event.key == pygame.K_e:
-                    rubins_group.update(event)
+                    crystal_group.update(event)
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     to_left = False
@@ -101,15 +101,17 @@ def game():
         mana_group.draw(SCREEN)
 
         crystal_group.draw(SCREEN)
+        crystal_group.update()
         player_group.draw(SCREEN)
         enemy_group.draw(SCREEN)
         bullets_group.draw(SCREEN)
         bullets.draw(SCREEN)
+        articles_of_magic.draw(SCREEN)
+        articles_of_magic.update()
         # bullets.update()
         # all_sprites.draw(screen)
         # wizard.draw_healbar()
         forest_group.draw(SCREEN)
-        rubins_group.update()
 
         draw_lives(xp)
         draw_mana(wizard.get_mana())

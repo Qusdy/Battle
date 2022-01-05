@@ -40,7 +40,9 @@ FIREBALL = {
     "speed": 1200 / FPS
 }
 
-img = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 0, 2)
+img_fireball = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 0, 2)
+img_ice_dart = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 2, 2)
 CRYSTALS = {
-    "fireball": pygame.transform.scale(img, (img.get_width() * 2, img.get_height() * 2))
+    "fireball": pygame.transform.scale(img_fireball, (img_fireball.get_width() * 2, img_fireball.get_height() * 2)),
+    'ice_dart': pygame.transform.scale(img_ice_dart, (img_ice_dart.get_width() * 2, img_ice_dart.get_height() * 2))
 }
