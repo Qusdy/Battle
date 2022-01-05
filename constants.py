@@ -44,7 +44,7 @@ ICE = {
     "class": None,
     "name": "Ледяной шип ",
     "damage": 5,
-    "speed": 1200 / FPS
+    "speed": 2000 / FPS
 }
 
 img_fireball = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 0, 2)
