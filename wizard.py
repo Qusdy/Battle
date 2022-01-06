@@ -166,9 +166,11 @@ class Wizard(AnimatedSprite):
                 bullet = Ice_dart(x, y, dx, dy)
 
     def change_spell(self):
+        SOUND_CHANGE_WEAPON.play()
         self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]
 
     def new_spell(self, spell):
+        SOUND_CHANGE_WEAPON.play()
         self.spell_now = spell
         self.spells.append(spell)
         # if 0 in self.spells:

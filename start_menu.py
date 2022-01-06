@@ -1,12 +1,8 @@
 from constants import *
 from button import Button
 import pygame
-import sys
-
-
-def terminate():
-    pygame.quit()
-    sys.exit()
+from terminate import terminate
+import level_menu
 
 
 def start_menu():
@@ -25,6 +21,7 @@ def start_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for btn in btns:
                     if btn.cursor_in_btn(event.pos):
+                        SOUND_BTN_CLICKED.play()
                         if btn.index == 0:
                             running = False
                         elif btn.index == 1:
@@ -35,3 +32,4 @@ def start_menu():
             btn.draw()
         pygame.display.flip()
         clock.tick(FPS)
+    level_menu.level_menu()

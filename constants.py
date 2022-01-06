@@ -2,6 +2,11 @@ import pygame
 from load_image import load_image
 from cut_title_sheet import cut_title_sheet
 import math
+pygame.init()
+
+pygame.mixer.music.load('data/game_theme.mp3')
+pygame.mixer.music.set_volume(50)
+pygame.mixer.music.play(-1)
 # PLAYER_SPEED = 16
 FPS = 60
 SPEED = 600 / FPS
@@ -26,12 +31,19 @@ WALL = "W"
 TWO_MUSHROOMS = "M"
 ONE_MUSHROOM = "m"
 TITLE_SHEET = load_image("title_sheet.png")
+SUMMER = 1
+WINTER = 2
+AUTUMN = 3
 
 FONT_SIZE_PARAM = 30
 
 BTN_SIZE = (350, 100)
 SIGHT = '*'
 ENEMY_HB_POS_X, ENEMY_HB_POS_Y, ENEMY_HB_WIDTH, ENEMY_HB_HEIGHT = 475, 0, 325, 100
+SOUND_BTN_CLICKED = pygame.mixer.Sound('data/buttonclick.mp3')
+SOUND_SHOOT = pygame.mixer.Sound('data/rocket-launcher.mp3')
+SOUND_BOOM = pygame.mixer.Sound('data/rocket-explode.mp3')
+SOUND_CHANGE_WEAPON = pygame.mixer.Sound('data/pickup.mp3')
 
 FIREBALL = {
     "class": None,

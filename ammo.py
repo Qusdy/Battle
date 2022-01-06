@@ -21,6 +21,7 @@ def rotate(self):
 class Fireball(pygame.sprite.Sprite):
     def __init__(self, x, y, dx, dy):
         pygame.sprite.Sprite.__init__(self)
+        SOUND_SHOOT.play()
         self.x = x
         self.y = y
         self.dx = dx
@@ -46,9 +47,11 @@ class Fireball(pygame.sprite.Sprite):
             for enemy in enemy_group:
                 if pygame.sprite.spritecollideany(enemy, bullets):
                     enemy.have_damage(10)
+                    SOUND_BOOM.play()
                     Boom(self)
                     self.kill()
         if pygame.sprite.spritecollideany(self, forest_group):
+            SOUND_BOOM.play()
             Boom(self)
             self.kill()
 
@@ -56,6 +59,7 @@ class Fireball(pygame.sprite.Sprite):
 class Ice_dart(pygame.sprite.Sprite):
     def __init__(self, x, y, dx, dy):
         pygame.sprite.Sprite.__init__(self)
+        SOUND_SHOOT.play()
         self.x = x
         self.y = y
         self.dx = dx
@@ -87,6 +91,7 @@ class Ice_dart(pygame.sprite.Sprite):
             for enemy in enemy_group:
                 if pygame.sprite.spritecollideany(enemy, bullets):
                     enemy.have_damage(5)
+                    enemy.speed -= 0.5
                     self.kill()
         if pygame.sprite.spritecollideany(self, forest_group):
             self.kill()

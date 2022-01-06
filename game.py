@@ -8,6 +8,7 @@ import pygame
 from load_image import load_image
 from draw_UI import *
 from enemy_healthbar import draw_enemy_healthbar
+from end_menu import end_menu
 
 
 def draw_bag(spells, current):
@@ -23,7 +24,9 @@ def draw_bag(spells, current):
             SCREEN.blit(cr_img, (300 + i * 48, 10, 32, 32))
 
 
-def game():
+def game(season):
+    season = season
+
     camera_to_right = 1
     running = True
     shaking = False
@@ -83,6 +86,12 @@ def game():
                     wizard.change_spell()
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 attacking = False
+        if wizard.health == 0:
+            running = False
+            end_menu(False)
+        if len(enemy_group) == 0:
+            running = False
+            end_menu(True)
 
         camera.update(wizard)
         if shaking:
