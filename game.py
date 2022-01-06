@@ -1,13 +1,26 @@
 from constants import *
 from camera import camera
-from wizard import get_wizard
-from enemy import get_enemies
+from wizard import wizard
+from enemy import enemy_bots
 from groups import *
 from map_generation import *
 import pygame
 from load_image import load_image
 from draw_UI import *
-from end_menu import end_menu
+from enemy_healthbar import draw_enemy_healthbar
+
+
+def draw_bag(spells, current):
+    # print(current)
+    # print(len(spells))
+    pygame.draw.rect(SCREEN, color=(41, 49, 51), rect=(300, 10, len(spells) * 48, 48), border_radius=10)
+    for i in range(len(spells)):
+        if spells[i] == current:
+            pygame.draw.rect(SCREEN, color=(255, 255, 255), rect=(300 + 48 * i, 10, 48, 48), border_radius=10, width=5)
+        if spells[i] != 0:
+            cr_img = CRYSTALS[spells[i]]
+            # print(cr_img.get_height())
+            SCREEN.blit(cr_img, (300 + i * 48, 10, 32, 32))
 
 
 def game():
@@ -15,8 +28,6 @@ def game():
     running = True
     shaking = False
 
-    wizard, enemy_bots = get_wizard(), get_enemies()
-    enemy_left = len(enemy_bots)
     to_up = False
     to_left = False
     to_right = False
@@ -26,7 +37,11 @@ def game():
     # add_forest()
     gen_map()
     gen_mana()
+
     gen_rubins()
+    gen_diamonds()
+    gen_emeralds()
+
     # print(len(level))
     # for i in level:
     #     print(i)
@@ -49,7 +64,7 @@ def game():
                 if event.key == pygame.K_h:
                     shaking = True
                 if event.key == pygame.K_e:
-                    rubins_group.update(event)
+                    crystal_group.update(event)
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     to_left = False
@@ -70,8 +85,6 @@ def game():
                 attacking = False
 
         camera.update(wizard)
-        if wizard.health == 0:
-            end_menu(False)
         if shaking:
             camera.dx += 10 * camera_to_right
         for i in all_sprites:
@@ -87,18 +100,27 @@ def game():
         map_sprites.draw(SCREEN)
         decor_group.draw(SCREEN)
         mana_group.draw(SCREEN)
-        rubins_group.draw(SCREEN)
+
+        crystal_group.draw(SCREEN)
+        crystal_group.update()
         player_group.draw(SCREEN)
         enemy_group.draw(SCREEN)
         bullets_group.draw(SCREEN)
         bullets.draw(SCREEN)
+        articles_of_magic.draw(SCREEN)
+        articles_of_magic.update()
         # bullets.update()
         # all_sprites.draw(screen)
         # wizard.draw_healbar()
         forest_group.draw(SCREEN)
-        rubins_group.update()
+
         draw_lives(xp)
         draw_mana(wizard.get_mana())
+        draw_bag(wizard.spells, wizard.spell_now)
+        for enemy in enemy_bots:
+            if enemy.in_sprite(pygame.mouse.get_pos()):
+                draw_enemy_healthbar(enemy.health)
+
         pygame.display.flip()
         clock.tick(FPS)
 

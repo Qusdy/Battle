@@ -6,6 +6,9 @@ from mushrooms import TwoMushrooms, OneMushroom
 from random import randint
 from mana import Mana
 from rubin import Rubin
+from emerald import Emerald
+from diamond import Diamond
+
 
 def load_level(file):
     file = open(file, mode="rt", encoding="UTF-8")
@@ -71,8 +74,27 @@ def gen_rubins():
     for i in range(3):
         coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
         rubin = Rubin((coords[0], coords[1]))
+        crystal_group.add(rubin)
         rubins_group.add(rubin)
         all_sprites.add(rubin)
+
+
+def gen_diamonds():
+    for i in range(3):
+        coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
+        diamond = Diamond((coords[0], coords[1]))
+        crystal_group.add(diamond)
+        diamond_group.add(diamond)
+        all_sprites.add(diamond)
+
+
+def gen_emeralds():
+    for i in range(3):
+        coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
+        emerald = Emerald((coords[0], coords[1]))
+        crystal_group.add(emerald)
+        emeralds_group.add(emerald)
+        all_sprites.add(emerald)
 
 # def add_forest():
 #     for i in range(0, len(level), 2):

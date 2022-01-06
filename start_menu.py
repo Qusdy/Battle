@@ -1,7 +1,12 @@
 from constants import *
 from button import Button
 import pygame
-from terminate import terminate
+import sys
+
+
+def terminate():
+    pygame.quit()
+    sys.exit()
 
 
 def start_menu():

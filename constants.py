@@ -1,5 +1,6 @@
 import pygame
 from load_image import load_image
+from cut_title_sheet import cut_title_sheet
 import math
 # PLAYER_SPEED = 16
 FPS = 60
@@ -30,11 +31,25 @@ FONT_SIZE_PARAM = 30
 
 BTN_SIZE = (350, 100)
 SIGHT = '*'
-
+ENEMY_HB_POS_X, ENEMY_HB_POS_Y, ENEMY_HB_WIDTH, ENEMY_HB_HEIGHT = 475, 0, 325, 100
 
 FIREBALL = {
     "class": None,
     "name": "Огненный шар ",
     "damage": 20,
     "speed": 1200 / FPS
+}
+
+ICE = {
+    "class": None,
+    "name": "Ледяной шип ",
+    "damage": 5,
+    "speed": 2000 / FPS
+}
+
+img_fireball = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 0, 2)
+img_ice_dart = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 2, 2)
+CRYSTALS = {
+    "fireball": pygame.transform.scale(img_fireball, (img_fireball.get_width() * 2, img_fireball.get_height() * 2)),
+    'ice_dart': pygame.transform.scale(img_ice_dart, (img_ice_dart.get_width() * 2, img_ice_dart.get_height() * 2))
 }
