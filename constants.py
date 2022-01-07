@@ -5,7 +5,6 @@ import math
 pygame.init()
 
 pygame.mixer.music.load('data/game_theme.mp3')
-pygame.mixer.music.set_volume(50)
 pygame.mixer.music.play(-1)
 # PLAYER_SPEED = 16
 FPS = 60
@@ -44,6 +43,7 @@ SOUND_BTN_CLICKED = pygame.mixer.Sound('data/buttonclick.mp3')
 SOUND_SHOOT = pygame.mixer.Sound('data/rocket-launcher.mp3')
 SOUND_BOOM = pygame.mixer.Sound('data/rocket-explode.mp3')
 SOUND_CHANGE_WEAPON = pygame.mixer.Sound('data/pickup.mp3')
+SOUND_FX = [SOUND_BTN_CLICKED, SOUND_SHOOT, SOUND_BOOM, SOUND_CHANGE_WEAPON]
 
 FIREBALL = {
     "class": None,

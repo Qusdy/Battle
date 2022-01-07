@@ -3,6 +3,7 @@ from button import Button
 import pygame
 from terminate import terminate
 import level_menu
+import sound_menu
 
 
 def start_menu():
@@ -25,7 +26,7 @@ def start_menu():
                         if btn.index == 0:
                             running = False
                         elif btn.index == 1:
-                            print('звук не подвезли')
+                            sound_menu.sound_menu()
                         elif btn.index == 2:
                             terminate()
         for btn in btns:
