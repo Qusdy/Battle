@@ -4,7 +4,17 @@ from cut_title_sheet import cut_title_sheet
 import math
 pygame.init()
 
+
+class Season:
+    def __init__(self):
+        self.season = None
+
+    def overwrite(self, season):
+        self.season = season
+
+
 pygame.mixer.music.load('data/game_theme.mp3')
+pygame.mixer.music.set_volume(50)
 pygame.mixer.music.play(-1)
 # PLAYER_SPEED = 16
 FPS = 60
@@ -29,7 +39,7 @@ TREE = "I"
 WALL = "W"
 TWO_MUSHROOMS = "M"
 ONE_MUSHROOM = "m"
-TITLE_SHEET = load_image("title_sheet.png")
+TITLE_SHEET = Season()
 SUMMER = 1
 WINTER = 2
 AUTUMN = 3
