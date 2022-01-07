@@ -9,6 +9,7 @@ from particle import create_particles
 
 class Wizard(AnimatedSprite):
     def __init__(self, sheet, colums, rows, x, y):
+        self.is_shaking = False
         sheet = pygame.transform.scale(sheet, (sheet.get_width() * 3, sheet.get_height() * 3))
         self.SPEED = SPEED
         super(Wizard, self).__init__(sheet, colums, rows, x, y)
@@ -24,6 +25,9 @@ class Wizard(AnimatedSprite):
         self.stand = []
         self.spells = [0]
         self.spell_now = self.spells[0]
+
+        self.clock = pygame.time.Clock()
+        self.time = 0
 
         for i in self.frames[WALK_FRAMES_IND[0]:WALK_FRAMES_IND[1]]:
             for j in range(5):
@@ -44,6 +48,11 @@ class Wizard(AnimatedSprite):
         self.touched = False
 
     def update(self, to_r, to_l, to_u, to_d, mouse_position=(0, 0), is_attacking=False):
+
+        self.time += self.clock.tick()
+        if self.time >= 200:
+            self.is_shaking = False
+
         if is_attacking:
             self.cur_frame = 0
             self.is_attacking = is_attacking
@@ -121,6 +130,8 @@ class Wizard(AnimatedSprite):
             for i in gr:
                 i.have_damage(5)
 
+
+
     def standing_animation(self, mouse_position):
         if mouse_position[0] < WINDOW_WIGHT // 2:
             self.look_direction_left = True
@@ -166,9 +177,11 @@ class Wizard(AnimatedSprite):
                 bullet = Ice_dart(x, y, dx, dy)
 
     def change_spell(self):
+        SOUND_CHANGE_WEAPON.play()
         self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]
 
     def new_spell(self, spell):
+        SOUND_CHANGE_WEAPON.play()
         self.spell_now = spell
         self.spells.append(spell)
         # if 0 in self.spells:

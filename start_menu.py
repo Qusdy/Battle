@@ -1,19 +1,15 @@
 from constants import *
 from button import Button
 import pygame
-import sys
-
-
-def terminate():
-    pygame.quit()
-    sys.exit()
+from terminate import terminate
+import level_menu
 
 
 def start_menu():
     bg = pygame.transform.scale(load_image('bg.png'), (WINDOW_WIGHT, WINDOW_HEIGHT))
     SCREEN.blit(bg, (0, 0))
-    btns = [Button(BTN_SIZE, (400, 100), 'Играть', 0), Button(BTN_SIZE, (400, 220), 'Звук', 1),
-            Button(BTN_SIZE, (400, 340), 'Выход', 2)]
+    btns = [Button(BTN_SIZE, (400, 150), 'Играть', 0), Button(BTN_SIZE, (400, 270), 'Звук', 1),
+            Button(BTN_SIZE, (400, 390), 'Выход', 2)]
     running = True
     while running:
         for event in pygame.event.get():
@@ -25,6 +21,7 @@ def start_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for btn in btns:
                     if btn.cursor_in_btn(event.pos):
+                        SOUND_BTN_CLICKED.play()
                         if btn.index == 0:
                             running = False
                         elif btn.index == 1:
@@ -35,3 +32,4 @@ def start_menu():
             btn.draw()
         pygame.display.flip()
         clock.tick(FPS)
+    level_menu.level_menu()
