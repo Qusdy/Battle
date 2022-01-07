@@ -46,6 +46,12 @@ class Enemy(AnimatedSprite):
         if self.health <= 0:
             self.dead_animation()
 
+    def in_sprite(self, pos):
+        if self.rect.x <= pos[0] <= self.rect.x + self.rect.width:
+            if self.rect.y <= pos[1] <= self.rect.y + self.rect.height:
+                return True
+        return False
+
     def dead_animation(self):
         self.speed = 0
         self.kill()
@@ -87,7 +93,9 @@ class Enemy(AnimatedSprite):
         self.health -= damage
 
 
-enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1)]
+enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+              Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
+              Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1)]
 
 for enemy in enemy_bots:
     enemy_group.add(enemy)

@@ -30,6 +30,7 @@ class Bullet(pygame.sprite.Sprite):
             self.dead = True
             if pygame.sprite.spritecollideany(self, player_group):
                 wizard.health -= BULLET_DAMAGE
+                wizard.is_shaking = True
                 if wizard.health <= 0:
                     wizard.health = 0
             self.kill()

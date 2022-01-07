@@ -5,18 +5,18 @@ from random import randrange
 
 
 class TwoMushrooms(BaseFloor):
-    image = TITLE_SHEET.subsurface((3 * 32, 32, 32, 32))
 
     def __init__(self, pos, *group):
+        self.image = TITLE_SHEET.season.subsurface((3 * 32, 32, 32, 32))
+        self.image = pygame.transform.scale(self.image,
+                                            (self.image.get_width() * 2, self.image.get_height() * 2))
         super().__init__(pos, *group)
-        self.image = pygame.transform.scale(TwoMushrooms.image,
-                                            (TwoMushrooms.image.get_width() * 2, TwoMushrooms.image.get_height() * 2))
 
 
 class OneMushroom(BaseFloor):
-    image = TITLE_SHEET.subsurface((3 * 32, 0, 32, 32))
 
     def __init__(self, pos, *group):
+        self.image = TITLE_SHEET.season.subsurface((3 * 32, 0, 32, 32))
+        self.image = pygame.transform.scale(self.image,
+                                            (self.image.get_width() * 2, self.image.get_height() * 2))
         super().__init__(pos, *group)
-        self.image = pygame.transform.scale(OneMushroom.image,
-                                            (OneMushroom.image.get_width() * 2, OneMushroom.image.get_height() * 2))
