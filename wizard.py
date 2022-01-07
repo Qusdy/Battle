@@ -9,11 +9,11 @@ from particle import create_particles
 
 class Wizard(AnimatedSprite):
     def __init__(self, sheet, colums, rows, x, y):
+        self.is_shaking = False
         sheet = pygame.transform.scale(sheet, (sheet.get_width() * 3, sheet.get_height() * 3))
         self.SPEED = SPEED
         super(Wizard, self).__init__(sheet, colums, rows, x, y)
         self.is_attacking = False
-
         self.mouse_pos = (0, 0)
         self.weapon = None
         self.rezet_mana = False
@@ -46,6 +46,10 @@ class Wizard(AnimatedSprite):
         self.touched = False
 
     def update(self, to_r, to_l, to_u, to_d, mouse_position=(0, 0), is_attacking=False):
+        self.time += self.clock.tick()
+        if self.time >= 200:
+            self.is_shaking = False
+            self.time = 0
         if is_attacking:
             self.cur_frame = 0
             self.is_attacking = is_attacking
@@ -73,10 +77,8 @@ class Wizard(AnimatedSprite):
         if to_r and not self.blocked_to_right:
             self.rect.x += SPEED_goriz
             self.blocked_to_left = False
-        self.time += clock.tick()
         if not self.is_attacking and self.mana < 50 and self.time >= 120:
             self.mana += 1
-            self.time = 0
         # Код Алана
         if self.is_attacking and self.spell_now == 0:
             if mouse_position[0] < WINDOW_WIGHT // 2:

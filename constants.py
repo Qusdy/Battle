@@ -6,6 +6,15 @@ from particles_of_magic import Particles_of_magic
 from groups import articles_of_magic
 pygame.init()
 
+
+class Season:
+    def __init__(self):
+        self.season = None
+
+    def overwrite(self, season):
+        self.season = season
+
+
 pygame.mixer.music.load('data/game_theme.mp3')
 pygame.mixer.music.set_volume(50)
 pygame.mixer.music.play(-1)
@@ -35,7 +44,7 @@ TREE = "I"
 WALL = "W"
 TWO_MUSHROOMS = "M"
 ONE_MUSHROOM = "m"
-TITLE_SHEET = load_image("title_sheet.png")
+TITLE_SHEET = Season()
 SUMMER = 1
 WINTER = 2
 AUTUMN = 3
@@ -63,6 +72,7 @@ SOUND_BTN_CLICKED = pygame.mixer.Sound('data/buttonclick.mp3')
 SOUND_SHOOT = pygame.mixer.Sound('data/rocket-launcher.mp3')
 SOUND_BOOM = pygame.mixer.Sound('data/rocket-explode.mp3')
 SOUND_CHANGE_WEAPON = pygame.mixer.Sound('data/pickup.mp3')
+SOUND_FX = [SOUND_BTN_CLICKED, SOUND_SHOOT, SOUND_BOOM, SOUND_CHANGE_WEAPON]
 
 FIREBALL = {
     "class": None,
