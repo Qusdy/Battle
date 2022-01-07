@@ -13,9 +13,9 @@ class Button:
 
     def draw(self):
         if self.active:
-            pygame.draw.rect(SCREEN, '#04396C', (self.x, self.y, self.width, self.height))
+            pygame.draw.rect(SCREEN, '#04396C', (self.x, self.y, self.width, self.height), border_radius=15)
         else:
-            pygame.draw.rect(SCREEN, '#26527C', (self.x, self.y, self.width, self.height))
+            pygame.draw.rect(SCREEN, '#26527C', (self.x, self.y, self.width, self.height), border_radius=15)
         text = self.font.render(self.text, True, 'white')
         SCREEN.blit(text, text.get_rect(center=(self.x + 0.5 * self.width, self.y + 0.5 * self.height)))
 

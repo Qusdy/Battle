@@ -25,7 +25,8 @@ class Bullet(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.dx * BULLET_SPEED
         self.rect.y += self.dy * BULLET_SPEED
-
+        if pygame.sprite.spritecollideany(self, forest_group):
+            self.kill()
         if ((self.rect.x - self.x1) ** 2 + (self.rect.y - self.y1) ** 2) ** 0.5 >= ENEMY_SHOOT_DISTANCE or pygame.sprite.spritecollideany(self, player_group):
             self.dead = True
             if pygame.sprite.spritecollideany(self, player_group):

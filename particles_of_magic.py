@@ -2,7 +2,7 @@ from groups import *
 
 
 class Particles_of_magic(pygame.sprite.Sprite):
-    def __init__(self, sheet, columns, rows, x, y, dlitel, *trans):
+    def __init__(self, obj, sheet, columns, rows, x, y, dlitel, *trans):
         super().__init__(all_sprites)
         self.frames = []
         self.trans = trans

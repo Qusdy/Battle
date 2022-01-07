@@ -16,14 +16,16 @@ class Wizard(AnimatedSprite):
 
         self.mouse_pos = (0, 0)
         self.weapon = None
-
-        self.mana = 0
+        self.rezet_mana = False
+        self.mana = 100
         self.health = 100
         self.attack = []
         self.run = []
         self.stand = []
-        self.spells = [0, 0]
+        self.spells = [0]
         self.spell_now = self.spells[0]
+        self.clock = pygame.time.Clock()
+        self.time = 0
 
         for i in self.frames[WALK_FRAMES_IND[0]:WALK_FRAMES_IND[1]]:
             for j in range(5):
@@ -71,6 +73,10 @@ class Wizard(AnimatedSprite):
         if to_r and not self.blocked_to_right:
             self.rect.x += SPEED_goriz
             self.blocked_to_left = False
+        self.time += clock.tick()
+        if not self.is_attacking and self.mana < 50 and self.time >= 120:
+            self.mana += 1
+            self.time = 0
         # Код Алана
         if self.is_attacking and self.spell_now == 0:
             if mouse_position[0] < WINDOW_WIGHT // 2:
@@ -80,8 +86,13 @@ class Wizard(AnimatedSprite):
             self.attack_animation(self.look_direction_left)
         elif self.is_attacking and self.spell_now == 'fireball':
             if self.mana >= 10:
-                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery])
+                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery], self.spell_now)
                 self.mana -= 10
+            self.is_attacking = False
+        elif self.is_attacking and self.spell_now == 'ice_dart':
+            if self.mana >= 5:
+                self.shoot(mouse_position, [self.rect.centerx, self.rect.centery], self.spell_now)
+                self.mana -= 5
             self.is_attacking = False
         elif not any([to_r, to_l, to_u, to_d]):
             self.standing_animation(mouse_position)
@@ -108,9 +119,13 @@ class Wizard(AnimatedSprite):
                 self.rect.y -= rastoyan
 
         if pygame.sprite.spritecollideany(self, mana_group) and self.mana < 100:
-
             self.mana += 10
             pygame.sprite.groupcollide(player_group, mana_group, False, True)
+
+        if pygame.sprite.spritecollideany(self, enemy_group) and is_attacking:
+            gr = pygame.sprite.groupcollide(enemy_group, player_group, False, False)
+            for i in gr:
+                i.have_damage(5)
 
     def standing_animation(self, mouse_position):
         if mouse_position[0] < WINDOW_WIGHT // 2:
@@ -138,28 +153,34 @@ class Wizard(AnimatedSprite):
     def draw_healbar(self):
         pygame.draw.rect(SCREEN, color="red", rect=(self.rect.x + 10, self.rect.y, 64, 10))
 
-
     def attacking(self, pos):
         pass
 
     def get_mana(self):
         return self.mana
 
-    def shoot(self, mousepos, perspos):
+    # Код Димы
+    def shoot(self, mousepos, perspos, spell):
         x = 0 + perspos[0]
         y = 0 + perspos[1]
         dx = mousepos[0] - perspos[1]
         dy = mousepos[1] - perspos[1]
         if abs(dx) > 0 or abs(dy) > 0:
-            bullet = Fireball(x, y, dx, dy)
+            if spell == 'fireball':
+                bullet = Fireball(x, y, dx, dy)
+            if spell == 'ice_dart':
+                bullet = Ice_dart(x, y, dx, dy)
 
     def change_spell(self):
+        SOUND_CHANGE_WEAPON.play()
         self.spell_now = self.spells[self.spells.index(self.spell_now) - 1]
 
     def new_spell(self, spell):
+        SOUND_CHANGE_WEAPON.play()
         self.spell_now = spell
-        if 0 in self.spells:
-            self.spells[self.spells.index(0)] = self.spell_now
+        self.spells.append(spell)
+        # if 0 in self.spells:
+        #     self.spells[self.spells.index(0)] = self.spell_now
 
 
 wizard = Wizard(load_image("DinoSprites - doux.png"), 24, 1, 640, 640)
