@@ -49,7 +49,6 @@ class Wizard(AnimatedSprite):
         self.time += self.clock.tick()
         if self.time >= 200:
             self.is_shaking = False
-            self.time = 0
         if is_attacking:
             self.cur_frame = 0
             self.is_attacking = is_attacking
@@ -77,8 +76,9 @@ class Wizard(AnimatedSprite):
         if to_r and not self.blocked_to_right:
             self.rect.x += SPEED_goriz
             self.blocked_to_left = False
-        if not self.is_attacking and self.mana < 50 and self.time >= 120:
+        if not self.is_attacking and self.mana < 20 and self.time >= 240:
             self.mana += 1
+            self.time = 0
         # Код Алана
         if self.is_attacking and self.spell_now == 0:
             if mouse_position[0] < WINDOW_WIGHT // 2:

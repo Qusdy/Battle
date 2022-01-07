@@ -86,7 +86,7 @@ class Ice_dart(pygame.sprite.Sprite):
                     enemy.have_damage(5)
                     if not enemy.frieze and choice(self.frize):
                         enemy.frieze = True
-                        enemy.speed -= (ENEMY_SPEED / FPS) / 2
+                        enemy.speed -= (ENEMY_SPEED / FPS) / 3
                     self.kill()
         if pygame.sprite.spritecollideany(self, forest_group):
             self.kill()

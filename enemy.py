@@ -44,11 +44,14 @@ class Enemy(AnimatedSprite):
         self.shoot_time = 0
         self.frieze_time = 0
         self.combustion_time = 0
+        self.death_time = 0
 
     def update(self, **kwargs):
         if self.distance_to_wizard() >= self.shoot_distance:
             self.running = True
+            self.death_time += 1
         else:
+            self.death_time = 0
             self.running = False
             if self.action <= 0:
                 if self.sideway:
@@ -71,44 +74,55 @@ class Enemy(AnimatedSprite):
             self.move()
             self.running_animation()
         else:
-            if self.sideway and self.distance_to_wizard() < self.shoot_distance:
-                self.sideways_movement()
-                self.running_animation()
             if self.bullet.dead and self.time >= 1500:
                 self.time = 0
                 self.shoot()
+            if self.sideway and self.distance_to_wizard() <= self.shoot_distance:
+                self.sideways_movement()
+                self.running_animation()
             self.stand_animation()
         if self.health <= 0:
             self.dead_animation()
         if self.frieze and self.frieze_time >= 80:
             self.frieze = False
             self.frieze_time = 0
-            self.speed += (ENEMY_SPEED / FPS) / 2
+            self.speed += (ENEMY_SPEED / FPS) / 3
         if self.combustion and self.combustion_time >= 80:
             self.combustion = False
             self.combustion_time = 0
-        speed = range(-5, 6)
         if self.frieze:
-            self.frieze_time += 1
-            if self.frieze_time % 2 == 0:
-                particle = Particle(self, load_image('0_ieKzfwSzaqG57--2.png'), 1, 1,
-                                    self.rect.x, self.rect.y, 1, choice(speed), choice(speed))
-                articles_of_magic.add(particle)
-                all_sprites.add(particle)
+            self.friezing()
         if self.combustion:
-            self.combustion_time += 1
-            self.health -= 0.05
-            if self.combustion_time % 2 == 0:
-                particle = Particle(self, load_image('0_ieKzfwSzaqG57--3.png'), 1, 1,
-                                    self.rect.x, self.rect.y, 1, choice(speed), choice(speed))
-                articles_of_magic.add(particle)
-                all_sprites.add(particle)
+            self.combustion_is()
+        if self.death_time >= 20:
+            font = pygame.font.Font(None, 50)
+            text = font.render("Терористы уходят! за ними", True, (255, 0, 0))
+            SCREEN.blit(text, (wizard.rect.centerx, wizard.rect.y - 20))
 
     def in_sprite(self, pos):
         if self.rect.x <= pos[0] <= self.rect.x + self.rect.width:
             if self.rect.y <= pos[1] <= self.rect.y + self.rect.height:
                 return True
         return False
+
+    def friezing(self):
+        self.frieze_time += 1
+        if self.frieze_time % 2 == 0:
+            speed = range(-5, 6)
+            particle = Particle(self, load_image('0_ieKzfwSzaqG57--2.png'), 1, 1,
+                                self.rect.x, self.rect.y, 1, choice(speed), choice(speed))
+            articles_of_magic.add(particle)
+            all_sprites.add(particle)
+
+    def combustion_is(self):
+        self.combustion_time += 1
+        self.health -= 0.05
+        if self.combustion_time % 2 == 0:
+            speed = range(-5, 6)
+            particle = Particle(self, load_image('0_ieKzfwSzaqG57--3.png'), 1, 1,
+                                self.rect.x, self.rect.y, 1, choice(speed), choice(speed))
+            articles_of_magic.add(particle)
+            all_sprites.add(particle)
 
     def dead_animation(self):
         self.speed = 0

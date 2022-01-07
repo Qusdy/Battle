@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1928f9c7-3609-4ccc-9244-07ec3d9665ea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/slider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sound_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ammo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ammo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/draw_UI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grass.py" beforeDir="false" afterPath="$PROJECT_DIR$/grass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mushrooms.py" beforeDir="false" afterPath="$PROJECT_DIR$/mushrooms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/tree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wizard.py" beforeDir="false" afterPath="$PROJECT_DIR$/wizard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,13 +83,14 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/enemy.py</url>
-          <line>97</line>
+          <line>94</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
