@@ -19,11 +19,11 @@ pygame.mixer.music.load('data/game_theme.mp3')
 pygame.mixer.music.set_volume(50)
 pygame.mixer.music.play(-1)
 # PLAYER_SPEED = 16
-FPS = 300
+FPS = 60
+SPEED = 600 / FPS
+ENEMY_SPEED = 580 / FPS
+BULLET_SPEED = 700 / FPS
 GRAVITY = 0.5
-SPEED = 2000 / FPS
-ENEMY_SPEED = 1250 / FPS
-BULLET_SPEED = 2250 / FPS
 BULLET_SIZE = (50, 50)
 BULLET_DAMAGE = 5
 ENEMY_SHOOT_DISTANCE = 400
@@ -78,14 +78,14 @@ FIREBALL = {
     "class": None,
     "name": "Огненный шар ",
     "damage": 20,
-    "speed": 2000 / FPS
+    "speed": 1200 / FPS
 }
 
 ICE = {
     "class": None,
     "name": "Ледяной шип ",
     "damage": 5,
-    "speed": 3500 / FPS
+    "speed": 2000 / FPS
 }
 
 img_fireball = cut_title_sheet(load_image("resources_basic.png"), 11, 11, 0, 2)

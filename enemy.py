@@ -83,33 +83,26 @@ class Enemy(AnimatedSprite):
         if self.frieze and self.frieze_time >= 80:
             self.frieze = False
             self.frieze_time = 0
-            #self.speed += 2
+            self.speed += (ENEMY_SPEED / FPS) / 2
         if self.combustion and self.combustion_time >= 80:
             self.combustion = False
             self.combustion_time = 0
-            #self.speed -= 2
+        speed = range(-5, 6)
         if self.frieze:
             self.frieze_time += 1
-            #self.speed -= 2
-            numbers = range(-5, 6)
-            particle = Particle(self, load_image('0_ieKzfwSzaqG57--2.png'), 5, 2,
-                                self.rect.x - 31, self.rect.y - 80, 50, choice(numbers), choice(numbers),
-                                (60, 60))
-            articles_of_magic.add(particle)
-            all_sprites.add(particle)
-        if self.combustion:
-            self.combustion_time += 1
-            #self.speed += 2
-            self.health -= 0.05
-            numbers = range(-5, 6)
-            try:
-                particle = Particle(self, load_image('0_ieKzfwSzaqG57--3.png'), 5, 2,
-                                    self.rect.x - 31, self.rect.y - 80, 50, choice(numbers), choice(numbers),
-                                    (60, 60))
+            if self.frieze_time % 2 == 0:
+                particle = Particle(self, load_image('0_ieKzfwSzaqG57--2.png'), 1, 1,
+                                    self.rect.x, self.rect.y, 1, choice(speed), choice(speed))
                 articles_of_magic.add(particle)
                 all_sprites.add(particle)
-            except TypeError:
-                pass
+        if self.combustion:
+            self.combustion_time += 1
+            self.health -= 0.05
+            if self.combustion_time % 2 == 0:
+                particle = Particle(self, load_image('0_ieKzfwSzaqG57--3.png'), 1, 1,
+                                    self.rect.x, self.rect.y, 1, choice(speed), choice(speed))
+                articles_of_magic.add(particle)
+                all_sprites.add(particle)
 
     def in_sprite(self, pos):
         if self.rect.x <= pos[0] <= self.rect.x + self.rect.width:
