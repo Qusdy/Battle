@@ -10,6 +10,7 @@ from draw_UI import *
 from enemy_healthbar import draw_enemy_healthbar
 from end_menu import end_menu
 from terminate import terminate
+from score import draw_score
 
 
 def draw_bag(spells, current):
@@ -100,10 +101,10 @@ def game(season):
                 attacking = False
         if wizard.health <= 0:
             running = False
-            end_menu(False)
+            end_menu(False, len(enemy_bots) - len(enemy_group))
         if len(enemy_group) == 0:
             running = False
-            end_menu(True)
+            end_menu(True, len(enemy_bots))
 
         camera.update(wizard)
 
@@ -142,7 +143,7 @@ def game(season):
         for enemy in enemy_bots:
             if enemy.in_sprite(pygame.mouse.get_pos()):
                 draw_enemy_healthbar(enemy.health)
-
+        draw_score(len(enemy_bots) - len(enemy_group), season)
         pygame.display.flip()
         clock.tick(FPS)
 
