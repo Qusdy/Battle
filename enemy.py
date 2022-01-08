@@ -228,33 +228,14 @@ class Enemy_bomber(Enemy):
         if self.frieze and self.frieze_time >= 80:
             self.frieze = False
             self.frieze_time = 0
-            self.speed *= 2
+            self.speed += (ENEMY_SPEED / FPS) / 3
         if self.combustion and self.combustion_time >= 80:
             self.combustion = False
             self.combustion_time = 0
-            self.speed /= 2
         if self.frieze:
-            self.frieze_time += 1
-            self.speed /= 2
-            numbers = range(-5, 6)
-            particle = Particle(self, load_image('0_ieKzfwSzaqG57--2.png'), 5, 2,
-                                self.rect.x - 31, self.rect.y - 80, 1, choice(numbers), choice(numbers),
-                                (60, 60))
-            articles_of_magic.add(particle)
-            all_sprites.add(particle)
+            self.friezing()
         if self.combustion:
-            self.combustion_time += 1
-            self.speed *= 2
-            self.health -= 0.05
-            numbers = range(-5, 6)
-            try:
-                particle = Particle(self, load_image('0_ieKzfwSzaqG57--3.png'), 5, 2,
-                                    self.rect.x - 31, self.rect.y - 80, 1, choice(numbers), choice(numbers),
-                                    (60, 60))
-                articles_of_magic.add(particle)
-                all_sprites.add(particle)
-            except TypeError:
-                pass
+            self.combustion_is()
 
 
 enemy_bots = [Enemy(load_image("DinoSprites-enemy.png"), 24, 1), Enemy(load_image("DinoSprites-enemy.png"), 24, 1),
