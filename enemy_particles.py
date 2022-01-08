@@ -1,9 +1,17 @@
+import time
+
+import pygame.time
+
 from groups import *
+from constants import GRAVITY
+from load_image import load_image
+from random import randint, choice
 
 
-class Particles_of_magic(pygame.sprite.Sprite):
-    def __init__(self, obj, sheet, columns, rows, x, y, dlitel, *trans):
+class Particle(pygame.sprite.Sprite):
+    def __init__(self, obj, sheet, columns, rows, x, y, dlitel, dx, dy, *trans):
         super().__init__(all_sprites)
+        pos = (x, y)
         self.frames = []
         self.trans = trans
         self.dlitel = dlitel
@@ -13,7 +21,12 @@ class Particles_of_magic(pygame.sprite.Sprite):
         if trans:
             self.image = pygame.transform.smoothscale(self.image, trans)
         self.rect = self.rect.move(x, y)
-        self.frame = 8
+        self.frame = 5
+        self.velocity = [dx, dy]
+        self.rect.x, self.rect.y = pos
+        self.gravity = GRAVITY
+        self.image = pygame.transform.rotate(self.image, randint(0, 359))
+        self.rect = self.image.get_rect(center=(self.rect.centerx, self.rect.centery))
 
     def cut_sheet(self, sheet, columns, rows):
         self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
@@ -33,3 +46,6 @@ class Particles_of_magic(pygame.sprite.Sprite):
             self.image = pygame.transform.smoothscale(self.image, self.trans)
         if self.frame <= 0:
             self.kill()
+        self.velocity[1] += self.gravity * choice([-1, 1])
+        self.rect.x += self.velocity[0]
+        self.rect.y += self.velocity[1]

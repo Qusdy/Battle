@@ -37,7 +37,6 @@ def game(season):
         is_winter = True
     else:
         is_winter = False
-
     TITLE_SHEET.overwrite(season_sheet)
     camera_to_right = 1
     running = True
@@ -77,6 +76,8 @@ def game(season):
                     to_down = True
                 if event.key == pygame.K_w:
                     to_up = True
+                if event.key == pygame.K_h:
+                    shaking = True
                 if event.key == pygame.K_e:
                     crystal_group.update(event)
             if event.type == pygame.KEYUP:
@@ -97,9 +98,7 @@ def game(season):
                     wizard.change_spell()
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 attacking = False
-
-
-        if wizard.health == 0:
+        if wizard.health <= 0:
             running = False
             end_menu(False)
         if len(enemy_group) == 0:
@@ -110,7 +109,6 @@ def game(season):
 
         if wizard.is_shaking:
             camera.dx += 10 * camera_to_right
-
         for i in all_sprites:
             camera.apply(i)
         bullets.update((camera.dx, camera.dy))

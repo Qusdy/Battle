@@ -5,7 +5,6 @@ from constants import *
 def draw_lives(xp, winter=False):
     margin_top = 10
     font = pygame.font.Font("data/Font.ttf", FONT_SIZE_PARAM)
-    # text = font.render(str(xp), False, "white")
 
     pygame.draw.rect(SCREEN, color="red", rect=(45, margin_top, 200 * (xp / 100), 30),
                      border_radius=10)

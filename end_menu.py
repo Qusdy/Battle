@@ -7,9 +7,10 @@ from terminate import terminate
 def end_menu(win):
     pygame.mixer.music.stop()
     pygame.mixer.music.load('data/to-be-continued.mp3')
-    pygame.mixer.music.set_volume(300)
+    pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
-    SCREEN.fill('black')
+    bg = pygame.transform.scale(load_image('bg.png'), (WINDOW_WIGHT, WINDOW_HEIGHT))
+    SCREEN.blit(bg, (0, 0))
     font = pygame.font.Font('data/Font.ttf', 80)
     if win:
         text = font.render('Вы победили!', True, 'white')

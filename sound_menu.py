@@ -9,6 +9,8 @@ from slider import Slider
 def sound_menu():
     btn = Button(BTN_SIZE, (225, 650), 'Поставить', 0)
     sliders = [Slider(100, 250, 600, 100, 'Звук эффектов ', 0), Slider(100, 500, 600, 100, 'Звук музыки ', 1)]
+    sliders[0].past_volume(SOUND_FX[0].get_volume() * 100)
+    sliders[1].past_volume(pygame.mixer.music.get_volume() * 100)
     running = True
     while running:
         bg = pygame.transform.scale(load_image('bg.png'), (WINDOW_WIGHT, WINDOW_HEIGHT))
@@ -40,7 +42,7 @@ def sound_menu():
             if event.type == pygame.MOUSEBUTTONUP:
                 for slider in sliders:
                     slider.active = False
-                    slider.check_new_pos()
+                    slider.set_volume()
         btn.draw()
         for slider in sliders:
             slider.draw()

@@ -63,7 +63,7 @@ def gen_map():
 
 def gen_mana():
     for i in range(100):
-        coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
+        coords = (randint(20 * 32, LEVEL_WIGHT - 20 * 32), randint(20 * 32, LEVEL_WIGHT - 20 * 32))
         # print(coords)
         mana = Mana((coords[0], coords[1]))
         mana_group.add(mana)
@@ -72,7 +72,7 @@ def gen_mana():
 
 def gen_rubins():
     for i in range(3):
-        coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
+        coords = (randint(20 * 32, LEVEL_WIGHT - 20 * 32), randint(20 * 32, LEVEL_WIGHT - 20 * 32))
         rubin = Rubin((coords[0], coords[1]))
         crystal_group.add(rubin)
         rubins_group.add(rubin)
@@ -81,7 +81,7 @@ def gen_rubins():
 
 def gen_diamonds():
     for i in range(3):
-        coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
+        coords = (randint(20 * 32, LEVEL_WIGHT - 20 * 32), randint(20 * 32, LEVEL_WIGHT - 20 * 32))
         diamond = Diamond((coords[0], coords[1]))
         crystal_group.add(diamond)
         diamond_group.add(diamond)
@@ -90,7 +90,7 @@ def gen_diamonds():
 
 def gen_emeralds():
     for i in range(3):
-        coords = (randint(13 * 32, LEVEL_WIGHT - 13 * 32), randint(13 * 32, LEVEL_WIGHT - 13 * 32))
+        coords = (randint(20 * 32, LEVEL_WIGHT - 20 * 32), randint(20 * 32, LEVEL_WIGHT - 20 * 32))
         emerald = Emerald((coords[0], coords[1]))
         crystal_group.add(emerald)
         emeralds_group.add(emerald)
