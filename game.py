@@ -98,7 +98,7 @@ def game(season):
                     wizard.change_spell()
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 attacking = False
-        if wizard.health == 0:
+        if wizard.health <= 0:
             running = False
             end_menu(False)
         if len(enemy_group) == 0:

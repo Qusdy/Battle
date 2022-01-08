@@ -50,6 +50,7 @@ class Enemy(AnimatedSprite):
         if self.distance_to_wizard() >= self.shoot_distance:
             self.running = True
             self.death_time += 1
+            self.sideway = False
         else:
             self.death_time = 0
             self.running = False
@@ -64,6 +65,12 @@ class Enemy(AnimatedSprite):
             else:
                 self.action -= 1
         self.time += self.clock.tick()
+        if self.sideway and not self.running:
+            self.sideways_movement()
+            self.running_animation()
+        if self.time >= 1500 and not self.running:
+            self.time = 0
+            self.shoot()
         if self.enemy_have_damage:
             self.damage_animation()
             self.damage_time += 1
@@ -74,12 +81,6 @@ class Enemy(AnimatedSprite):
             self.move()
             self.running_animation()
         else:
-            if self.bullet.dead and self.time >= 1500:
-                self.time = 0
-                self.shoot()
-            if self.sideway and self.distance_to_wizard() <= self.shoot_distance:
-                self.sideways_movement()
-                self.running_animation()
             self.stand_animation()
         if self.health <= 0:
             self.dead_animation()
@@ -125,7 +126,6 @@ class Enemy(AnimatedSprite):
             all_sprites.add(particle)
 
     def dead_animation(self):
-        self.speed = 0
         self.kill()
 
     def distance_to_wizard(self):
@@ -210,7 +210,9 @@ class Enemy_bomber(Enemy):
         self.combustion_time = 0
 
     def update(self, **kwargs):
-        if self.distance_to_wizard() != 0:
+        if self.health <= 0:
+            self.dead_animation()
+        if self.distance_to_wizard() > 0:
             self.move()
             self.running_animation()
         else:
@@ -223,8 +225,6 @@ class Enemy_bomber(Enemy):
             if self.damage_time >= 15:
                 self.enemy_have_damage = False
                 self.damage_time = 0
-        if self.health <= 0:
-            self.dead_animation()
         if self.frieze and self.frieze_time >= 80:
             self.frieze = False
             self.frieze_time = 0
