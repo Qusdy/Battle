@@ -4,18 +4,21 @@ import pygame
 from terminate import terminate
 
 
-def end_menu(win):
+def end_menu(win, final_score):
     pygame.mixer.music.stop()
     pygame.mixer.music.load('data/to-be-continued.mp3')
-    pygame.mixer.music.set_volume(300)
+    pygame.mixer.music.set_volume(LAST_MUSIC_VOLUME)
     pygame.mixer.music.play(-1)
-    SCREEN.fill('black')
+    bg = pygame.transform.scale(load_image('bg.png'), (WINDOW_WIGHT, WINDOW_HEIGHT))
+    SCREEN.blit(bg, (0, 0))
     font = pygame.font.Font('data/Font.ttf', 80)
     if win:
         text = font.render('Вы победили!', True, 'white')
     else:
         text = font.render('Вы проиграли :(', True, 'white')
+    text2 = font.render('И победили ' + str(final_score), True, 'white')
     SCREEN.blit(text, text.get_rect(center=(WINDOW_WIGHT * 0.5, WINDOW_HEIGHT * 0.5)))
+    SCREEN.blit(text2, (150, 100))
     btn = Button(BTN_SIZE, (225, 500), 'ВЫХОД', 0)
     running = True
     while running:

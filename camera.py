@@ -12,8 +12,11 @@ class Camera:
 
     # сдвинуть объект obj на смещение камеры
     def apply(self, obj):
-        obj.rect.x += self.dx
-        obj.rect.y += self.dy
+        try:
+            obj.rect.x += self.dx
+            obj.rect.y += self.dy
+        except TypeError:
+            pass
 
     # позиционировать камеру на объекте target
     def update(self, target):

@@ -5,7 +5,6 @@ from constants import *
 def draw_lives(xp, winter=False):
     margin_top = 10
     font = pygame.font.Font("data/Font.ttf", FONT_SIZE_PARAM)
-    # text = font.render(str(xp), False, "white")
 
     pygame.draw.rect(SCREEN, color="red", rect=(45, margin_top, 200 * (xp / 100), 30),
                      border_radius=10)
@@ -43,3 +42,13 @@ def draw_mana(mana, winter=False):
     mana_im = load_image("mana.png")
     mana_im = pygame.transform.scale(mana_im, (mana_im.get_width() * 4, mana_im.get_height() * 4))
     SCREEN.blit(mana_im, (10, margin_top, 32, 32))
+
+
+def draw_bag(spells, current):
+    pygame.draw.rect(SCREEN, color=(41, 49, 51), rect=(300, 10, len(spells) * 48, 48), border_radius=10)
+    for i in range(len(spells)):
+        if spells[i] == current:
+            pygame.draw.rect(SCREEN, color=(255, 255, 255), rect=(300 + 48 * i, 10, 48, 48), border_radius=10, width=5)
+        if spells[i] != 0:
+            cr_img = CRYSTALS[spells[i]]
+            SCREEN.blit(cr_img, (300 + i * 48, 10, 32, 32))
