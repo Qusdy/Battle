@@ -54,17 +54,11 @@ def gen_map():
                 all_sprites.add(grass_sprite)
                 all_sprites.add(mushroom_sprite)
 
-            #
-            # else:
-            #     road_sprite = Road((i * 32, z * 32))
-            #     map_sprites.add(road_sprite)
-            #     all_sprites.add(road_sprite)
-
 
 def gen_mana():
     for i in range(100):
         coords = (randint(20 * 32, LEVEL_WIGHT - 20 * 32), randint(20 * 32, LEVEL_WIGHT - 20 * 32))
-        # print(coords)
+
         mana = Mana((coords[0], coords[1]))
         mana_group.add(mana)
         all_sprites.add(mana)
@@ -96,13 +90,3 @@ def gen_emeralds():
         emeralds_group.add(emerald)
         all_sprites.add(emerald)
 
-# def add_forest():
-#     for i in range(0, len(level), 2):
-#         for j in range(0, 14, 2):
-#             level[i][j] = TREE
-#             level[i][-j] = TREE
-#             #
-#             level[j][i] = TREE
-#             level[-j][i] = TREE
-#     for i in level:
-#         print(i)

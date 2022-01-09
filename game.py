@@ -14,15 +14,12 @@ from score import draw_score
 
 
 def draw_bag(spells, current):
-    # print(current)
-    # print(len(spells))
     pygame.draw.rect(SCREEN, color=(41, 49, 51), rect=(300, 10, len(spells) * 48, 48), border_radius=10)
     for i in range(len(spells)):
         if spells[i] == current:
             pygame.draw.rect(SCREEN, color=(255, 255, 255), rect=(300 + 48 * i, 10, 48, 48), border_radius=10, width=5)
         if spells[i] != 0:
             cr_img = CRYSTALS[spells[i]]
-            # print(cr_img.get_height())
             SCREEN.blit(cr_img, (300 + i * 48, 10, 32, 32))
 
 
@@ -49,7 +46,7 @@ def game(season):
     to_down = False
     xp = 100
     load_level("data/level.txt")
-    # add_forest()
+
     gen_map()
     gen_mana()
 
@@ -57,13 +54,11 @@ def game(season):
     gen_diamonds()
     gen_emeralds()
 
-    # print(len(level))
-    # for i in level:
-    #     print(i)
     pos = (0, 0)
     attacking = False
     while running:
         SCREEN.fill("black")
+        # обработка событий
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -99,6 +94,8 @@ def game(season):
                     wizard.change_spell()
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 attacking = False
+
+        # Проверка на победу или поражение
         if wizard.health <= 0:
             running = False
             end_menu(False, len(enemy_bots) - len(enemy_group))
@@ -106,6 +103,7 @@ def game(season):
             running = False
             end_menu(True, len(enemy_bots))
 
+         # Дальше обновляем все объекты
         camera.update(wizard)
 
         if wizard.is_shaking:
@@ -132,17 +130,17 @@ def game(season):
         bullets.draw(SCREEN)
         articles_of_magic.draw(SCREEN)
         articles_of_magic.update()
-        # bullets.update()
-        # all_sprites.draw(screen)
-        # wizard.draw_healbar()
+
         forest_group.draw(SCREEN)
 
         draw_lives(xp, is_winter)
         draw_mana(wizard.get_mana(), is_winter)
         draw_bag(wizard.spells, wizard.spell_now)
+        # Отрисовка хп врага, если на него наведена мышка
         for enemy in enemy_bots:
             if enemy.in_sprite(pygame.mouse.get_pos()):
                 draw_enemy_healthbar(enemy.health)
+        # Отрисовка количества врагов, убитых игроком
         draw_score(len(enemy_bots) - len(enemy_group), season)
         pygame.display.flip()
         clock.tick(FPS)

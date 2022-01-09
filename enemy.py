@@ -1,19 +1,18 @@
 from animated_sprite import AnimatedSprite
 from bullet import Bullet
 from constants import *
-from groups import enemy_group, bullets, all_sprites, articles_of_magic
+from groups import enemy_group, all_sprites, articles_of_magic
 from load_image import load_image
 from random import randrange, uniform, choice
 from wizard import wizard
 import pygame
 from enemy_particles import Particle
-from particles_of_magic import Particles_of_magic
 
 
 class Enemy(AnimatedSprite):
     def __init__(self, sheet, colums, rows):
         sheet = pygame.transform.scale(sheet, (sheet.get_width() * 3, sheet.get_height() * 3))
-        self.speed = uniform(10, ENEMY_SPEED)
+        self.speed = uniform(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED)
         x, y = self.get_coord()
         super(Enemy, self).__init__(sheet, colums, rows, x, y)
         self.run = []
@@ -87,7 +86,7 @@ class Enemy(AnimatedSprite):
         if self.frieze and self.frieze_time >= 80:
             self.frieze = False
             self.frieze_time = 0
-            self.speed += (ENEMY_SPEED / FPS) / 3
+            self.speed += (MAX_ENEMY_SPEED / FPS) / 3
         if self.combustion and self.combustion_time >= 80:
             self.combustion = False
             self.combustion_time = 0
@@ -186,7 +185,7 @@ class Enemy(AnimatedSprite):
 class Enemy_bomber(Enemy):
     def __init__(self, sheet, colums, rows):
         sheet = pygame.transform.scale(sheet, (sheet.get_width() * 3, sheet.get_height() * 3))
-        self.speed = uniform(10.5, ENEMY_SPEED + 0.5)
+        self.speed = uniform(MAX_ENEMY_BOMBER_SPEED, MAX_ENEMY_BOMBER_SPEED)
         x, y = self.get_coord()
         super(Enemy, self).__init__(sheet, colums, rows, x, y)
         self.run = []
@@ -228,7 +227,7 @@ class Enemy_bomber(Enemy):
         if self.frieze and self.frieze_time >= 80:
             self.frieze = False
             self.frieze_time = 0
-            self.speed += (ENEMY_SPEED / FPS) / 3
+            self.speed += (MAX_ENEMY_SPEED / FPS) / 3
         if self.combustion and self.combustion_time >= 80:
             self.combustion = False
             self.combustion_time = 0

@@ -22,7 +22,7 @@ class Fireball(pygame.sprite.Sprite):
         self.y = y
         self.dx = dx
         self.dy = dy
-        self.image = pygame.transform.smoothscale(load_image('fireball.png').convert_alpha(), (20, 20))
+        self.image = pygame.transform.smoothscale(load_image('fireball.png').convert_alpha(), MAGIC_SIZE)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.speed = FIREBALL['speed']
@@ -66,7 +66,7 @@ class Ice_dart(pygame.sprite.Sprite):
         self.dy = dy
         self.original_image = load_image('hadouken-all-you-can.png')
         self.position = (x, y)
-        self.image = pygame.transform.smoothscale(self.original_image.convert_alpha(), (20, 20))
+        self.image = pygame.transform.smoothscale(self.original_image.convert_alpha(), MAGIC_SIZE)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.speed = ICE['speed']
@@ -94,7 +94,7 @@ class Ice_dart(pygame.sprite.Sprite):
                     enemy.have_damage(5)
                     if not enemy.frieze and choice(self.frize):
                         enemy.frieze = True
-                        enemy.speed -= (ENEMY_SPEED / FPS) / 3
+                        enemy.speed -= (MAX_ENEMY_SPEED / FPS) / 3
                     self.kill()
         if pygame.sprite.spritecollideany(self, forest_group):
             self.kill()
@@ -110,7 +110,7 @@ class SnowBall(pygame.sprite.Sprite):
         self.dy = dy
         self.original_image = load_image('hadouken-all-you-can.png')
         self.position = (x, y)
-        self.image = pygame.transform.smoothscale(self.original_image.convert_alpha(), (20, 20))
+        self.image = pygame.transform.smoothscale(self.original_image.convert_alpha(), MAGIC_SIZE)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.speed = SNOWBALL['speed']
@@ -120,13 +120,6 @@ class SnowBall(pygame.sprite.Sprite):
         rotate(self)
 
     def update(self, camera=(0, 0)):
-        print(123)
-        # particle = Particles_of_magic(load_image('kisspng-rpg-maker-vx-rpg-maker-mv-animated-film-role-playi'
-        #                                          '-5b329b11993981.2440375915300431536276.png'), 5, 2,
-        #                               self.rect.x, self.rect.y, 1,
-        #                               (30, 30))
-        # articles_of_magic.add(particle)
-        # all_sprites.add(particle)
         self.pos.x += (self.dir.x * self.speed) + camera[0]
         self.pos.y += (self.dir.y * self.speed) + camera[1]
         self.rect.center = (self.pos.x, self.pos.y)

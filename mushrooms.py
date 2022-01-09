@@ -1,7 +1,6 @@
 from base_floor import BaseFloor
 from constants import TITLE_SHEET
 import pygame
-from random import randrange
 
 
 class TwoMushrooms(BaseFloor):

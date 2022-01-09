@@ -7,7 +7,7 @@ from terminate import terminate
 def end_menu(win, final_score):
     pygame.mixer.music.stop()
     pygame.mixer.music.load('data/to-be-continued.mp3')
-    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.set_volume(LAST_MUSIC_VOLUME)
     pygame.mixer.music.play(-1)
     bg = pygame.transform.scale(load_image('bg.png'), (WINDOW_WIGHT, WINDOW_HEIGHT))
     SCREEN.blit(bg, (0, 0))

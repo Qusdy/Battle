@@ -18,10 +18,13 @@ class Season:
 pygame.mixer.music.load('data/game_theme.mp3')
 pygame.mixer.music.set_volume(1)
 pygame.mixer.music.play(-1)
-# PLAYER_SPEED = 16
+
 FPS = 60
 SPEED = 600 / FPS
-ENEMY_SPEED = 580 / FPS
+MIN_ENEMY_SPEED = 10
+MIN_ENEMY_BOMBER_SPEED = 10.5
+MAX_ENEMY_SPEED = 580 / FPS
+MAX_ENEMY_BOMBER_SPEED = MAX_ENEMY_SPEED + 0.5
 BULLET_SPEED = 700 / FPS
 GRAVITY = 1
 BULLET_SIZE = (50, 50)
@@ -45,6 +48,7 @@ WALL = "W"
 TWO_MUSHROOMS = "M"
 ONE_MUSHROOM = "m"
 TITLE_SHEET = Season()
+MAGIC_SIZE = (20, 20)
 SUMMER = 1
 WINTER = 2
 AUTUMN = 3
@@ -66,6 +70,7 @@ def rotate_Funk(self):
 FONT_SIZE_PARAM = 30
 
 BTN_SIZE = (350, 100)
+BTN_FONT = pygame.font.Font('data/Font.ttf', 50)
 SIGHT = '*'
 ENEMY_HB_POS_X, ENEMY_HB_POS_Y, ENEMY_HB_WIDTH, ENEMY_HB_HEIGHT = 475, 0, 325, 100
 SOUND_BTN_CLICKED = pygame.mixer.Sound('data/buttonclick.mp3')
@@ -73,6 +78,7 @@ SOUND_SHOOT = pygame.mixer.Sound('data/rocket-launcher.mp3')
 SOUND_BOOM = pygame.mixer.Sound('data/rocket-explode.mp3')
 SOUND_CHANGE_WEAPON = pygame.mixer.Sound('data/pickup.mp3')
 SOUND_FX = [SOUND_BTN_CLICKED, SOUND_SHOOT, SOUND_BOOM, SOUND_CHANGE_WEAPON]
+LAST_MUSIC_VOLUME = 0.5
 for effect in SOUND_FX:
     effect.set_volume(1)
 

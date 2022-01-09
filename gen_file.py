@@ -8,7 +8,6 @@ for i in range(100):
             fi.write("I")
         else:
             ran = randint(0, 150)
-            print(ran)
             if ran == 2:
                 fi.write("m")
             elif ran == 1:
@@ -16,14 +15,4 @@ for i in range(100):
             else:
                 fi.write('0')
 
-            # else:
-            #     fi.write("M")
-
     fi.write("\n")
-
-
-# for i in range(100):
-#     for j in range(100):
-#         fi.write("0")
-#
-#     fi.write("\n")

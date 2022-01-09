@@ -38,7 +38,7 @@ class Wizard(AnimatedSprite):
         for i in self.frames[ATTACK_FRAMES_IND[0]:ATTACK_FRAMES_IND[1]]:
             for j in range(5):
                 self.attack.append(i)
-        # self.healbar_wid = self.image.get_width()
+
         self.look_direction_left = False
 
         self.blocked_to_up = self.blocked_to_right = self.blocked_to_left = self.blocked_to_down = False
@@ -97,7 +97,6 @@ class Wizard(AnimatedSprite):
                 self.mana -= 5
             self.is_attacking = False
         elif self.is_attacking and self.spell_now == 'snowball':
-            print(self.spell_now)
             if self.mana >= 1:
                 self.shoot(mouse_position, [self.rect.centerx, self.rect.centery], self.spell_now)
                 self.mana -= 1
@@ -192,8 +191,6 @@ class Wizard(AnimatedSprite):
         SOUND_CHANGE_WEAPON.play()
         self.spell_now = spell
         self.spells.append(spell)
-        # if 0 in self.spells:
-        #     self.spells[self.spells.index(0)] = self.spell_now
 
 
 wizard = Wizard(load_image("DinoSprites - doux.png"), 24, 1, 640, 640)
